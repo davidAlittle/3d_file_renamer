@@ -26,6 +26,16 @@
     "tags": {
         "auto_suggest_tags": true,
         "tag_style": "brackets",
-        "tag_separator": " "
+        "tag_separator": " |"
+    },
+    "window": {
+        "size": [
+            1707,
+            937
+        ],
+        "position": [
+            0,
+            -7
+        ]
     }
 }
