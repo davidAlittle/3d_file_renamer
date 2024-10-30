@@ -1,0 +1,184 @@
+{
+    "categories": {
+        "ANIME": {
+            "patterns": ["anime", "manga", "waifu", "dragon ball", "bleach", "naruto", "one piece", "my hero academia", "fullmetal alchemist", "goblin slayer"],
+            "description": "Anime and manga related models",
+            "priority": 1
+        },
+        "GAME": {
+            "patterns": ["sonic", "mario", "pokemon", "zelda", "minecraft", "fallout", "portal", "dead by daylight", "helldivers"],
+            "description": "Video game characters and items",
+            "priority": 1
+        },
+        "HARRY": {
+            "patterns": ["harry potter", "hogwarts", "wand", "wizard", "gryffindor", "slytherin", "ravenclaw", "hufflepuff", "quidditch"],
+            "description": "Harry Potter universe items",
+            "priority": 1
+        },
+        "DECOR": {
+            "patterns": ["lamp", "planter", "vase", "holder", "display", "stand", "wall mount", "ornament", "decoration", "light"],
+            "description": "Decorative items",
+            "priority": 2
+        },
+        "FLEXI": {
+            "patterns": ["flexi", "articulated", "movable", "print in place", "articulating"],
+            "description": "Flexible/articulated prints",
+            "priority": 1
+        },
+        "PROP": {
+            "patterns": ["mask", "helmet", "weapon", "costume", "armor", "shield", "sword", "prop"],
+            "description": "Costume props and wearables",
+            "priority": 1
+        },
+        "HOLD": {
+            "patterns": ["stand", "holder", "mount", "organizer", "storage", "container", "box", "case"],
+            "description": "Holders and organizers",
+            "priority": 2
+        },
+        "PUZ": {
+            "patterns": ["puzzle", "brain teaser", "maze", "mechanical puzzle", "cube puzzle"],
+            "description": "Puzzles and brain teasers",
+            "priority": 1
+        },
+        "HDAY": {
+            "patterns": ["christmas", "halloween", "easter", "valentine", "holiday", "xmas", "spooky", "festive"],
+            "description": "Holiday-themed items",
+            "priority": 2
+        },
+        "FIG": {
+            "patterns": ["figure", "statue", "bust", "sculpture", "figurine", "miniature"],
+            "description": "Character figures and statues",
+            "priority": 1
+        },
+        "TOY": {
+            "patterns": ["toy", "kit card", "buildable", "playset", "action figure", "playable"],
+            "description": "Toys and playable items",
+            "priority": 1
+        },
+        "KITCHEN": {
+            "patterns": ["cookie cutter", "kitchen", "utensil", "cooking", "baking", "food"],
+            "description": "Kitchen-related items",
+            "priority": 2
+        },
+        "PET": {
+            "patterns": ["pet", "cat", "dog", "animal", "bird", "feeder", "pet toy"],
+            "description": "Pet-related items",
+            "priority": 2
+        },
+        "MISC": {
+            "patterns": [],
+            "description": "Miscellaneous items",
+            "priority": 0
+        }
+    },
+    "franchises": {
+        "Harry Potter": {
+            "patterns": ["harry potter", "hogwarts", "wizard", "gryffindor", "slytherin", "ravenclaw", "hufflepuff"],
+            "aliases": ["HP", "Potterverse"],
+            "related_categories": ["HARRY", "PROP"]
+        },
+        "Star Wars": {
+            "patterns": ["star wars", "mandalorian", "jedi", "sith", "lightsaber", "death star"],
+            "aliases": ["SW"],
+            "related_categories": ["PROP", "FIG"]
+        },
+        "Dragon Ball": {
+            "patterns": ["dragon ball", "dbz", "goku", "vegeta", "saiyan", "capsule corp"],
+            "aliases": ["DBZ", "DB"],
+            "related_categories": ["ANIME", "FIG"]
+        },
+        "Sonic": {
+            "patterns": ["sonic", "tails", "knuckles", "eggman", "shadow", "amy rose"],
+            "aliases": ["Sonic the Hedgehog"],
+            "related_categories": ["GAME", "FIG"]
+        },
+        "Pokemon": {
+            "patterns": ["pokemon", "pikachu", "charizard", "pokeball"],
+            "aliases": ["Pocket Monsters"],
+            "related_categories": ["GAME", "FIG"]
+        },
+        "Mario": {
+            "patterns": ["mario", "luigi", "bowser", "peach", "toad", "yoshi"],
+            "aliases": ["Super Mario"],
+            "related_categories": ["GAME", "FIG"]
+        }
+    },
+    "creators": {
+        "HEX3D": {
+            "patterns": ["hex3d", "hex 3d", "hex3d_"],
+            "always_tag": true,
+            "trusted": true
+        },
+        "TORRIDA": {
+            "patterns": ["torrida", "torrida minis"],
+            "always_tag": true,
+            "trusted": true
+        },
+        "FLEXISTL": {
+            "patterns": ["flexistl"],
+            "always_tag": true,
+            "trusted": true
+        },
+        "CINDERWING3D": {
+            "patterns": ["cinderwing"],
+            "always_tag": true,
+            "trusted": true
+        },
+        "PLAKIT": {
+            "patterns": ["plakit"],
+            "always_tag": true,
+            "trusted": true
+        }
+    },
+    "special_patterns": {
+        "TOY": {
+            "patterns": ["kit card", "toy", "buildable", "playset"],
+            "override_category": true
+        },
+        "PROP": {
+            "patterns": ["mask", "wearable", "costume", "armor", "helmet"],
+            "override_category": true
+        },
+        "MULTI": {
+            "patterns": ["multicolor", "multi-color", "multi color"],
+            "override_category": false
+        },
+        "PiP": {
+            "patterns": ["print in place", "printinplace", "pip"],
+            "override_category": false
+        }
+    },
+    "tag_rules": {
+        "auto_tags": {
+            "MULTI": ["multicolor", "multi-color", "multi color"],
+            "PiP": ["print in place", "printinplace", "pip"],
+            "NSFW": ["nsfw", "adult", "mature"],
+            "SFW": ["sfw", "safe", "standard"]
+        },
+        "content_based_tags": {
+            "STL": {
+                "file_contains": [".stl"]
+            },
+            "DOCUMENTED": {
+                "file_contains": ["readme", ".txt", ".pdf"]
+            },
+            "MULTI_PART": {
+                "file_contains": ["part", "piece"]
+            }
+        }
+    },
+    "naming_patterns": {
+        "version": {
+            "regex": "[vV](\\d+(\\.\\d+)?)",
+            "preserve": true
+        },
+        "technical_specs": {
+            "regex": "(\\d+(?:\\.\\d+)?(?:mm|cm|m|x|\\d+p))",
+            "preserve": true
+        },
+        "nsfw_indicators": {
+            "regex": "\\+\\s*nsfw|standard[_\\s]*nsfw",
+            "indicates_both_versions": true
+        }
+    }
+}
