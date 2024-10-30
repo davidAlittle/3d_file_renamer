@@ -456,76 +456,76 @@ class MainWindow(QMainWindow):
                [self.x(), self.y()])
 # In main_window.py, replace both export_rules methods with:
 
-def export_rules(self):
-    """Export current rename rules"""
-    filename, _ = QFileDialog.getSaveFileName(
-        self,
-        "Export Rules",
-        str(Path("rules") / "rename_rules.json"),
-        "JSON Files (*.json)"
-    )
-    if filename:
-        try:
-            # Use rules_manager to export (it has the current state)
-            self.rules_manager.save_rules(filename)
-            
-            # Also export tag categories for completeness
-            rules = self.rules_manager.rules
-            rules['tag_categories'] = TagEditor.CATEGORIES
-            
-            with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(rules, f, indent=2)
-            
-            QMessageBox.information(self, "Success", 
-                "Rules exported successfully")
-        except Exception as e:
-            logging.error(f"Failed to export rules: {e}")
-            QMessageBox.warning(self, "Error", 
-                f"Failed to export rules: {str(e)}")
-
-# Replace both import_rules methods with:
-
-def import_rules(self):
-    """Import rename rules"""
-    filename, _ = QFileDialog.getOpenFileName(
-        self,
-        "Import Rules",
-        str(Path("rules")),
-        "JSON Files (*.json)"
-    )
-    if filename:
-        try:
-            # Load and validate rules
-            with open(filename, 'r', encoding='utf-8') as f:
-                rules = json.load(f)
-            
-            # Validate rules format
-            self.rules_manager.validate_rules(rules)
-            
-            # Update rules manager
-            self.rules_manager.rules = rules
-            
-            # Update tag editor if tag categories are present
-            if 'tag_categories' in rules:
-                TagEditor.CATEGORIES.update(rules['tag_categories'])
-            
-            # Refresh UI
-            self.refresh_suggested_names()
-            
-            QMessageBox.information(self, "Success", 
-                "Rules imported successfully")
-        except ValueError as ve:
-            logging.error(f"Invalid rules format: {ve}")
-            QMessageBox.warning(self, "Error", 
-                f"Invalid rules format: {str(ve)}")
-        except Exception as e:
-            logging.error(f"Failed to import rules: {e}")
-            QMessageBox.warning(self, "Error", 
-                f"Failed to import rules: {str(e)}")
-            
-def refresh_suggested_names(self):
-        """Refresh all suggested names in the file table"""
-        for row in range(self.file_table.rowCount()):
-            filename = self.file_table.item(row, 0).text()
-            suggested_name = self.generate_new_name(filename)
-            self.file_table.item(row, 1).setText(suggested_name)       
+    def export_rules(self):
+        """Export current rename rules"""
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            "Export Rules",
+            str(Path("rules") / "rename_rules.json"),
+            "JSON Files (*.json)"
+        )
+        if filename:
+            try:
+                # Use rules_manager to export (it has the current state)
+                self.rules_manager.save_rules(filename)
+                
+                # Also export tag categories for completeness
+                rules = self.rules_manager.rules
+                rules['tag_categories'] = TagEditor.CATEGORIES
+                
+                with open(filename, 'w', encoding='utf-8') as f:
+                    json.dump(rules, f, indent=2)
+                
+                QMessageBox.information(self, "Success", 
+                    "Rules exported successfully")
+            except Exception as e:
+                logging.error(f"Failed to export rules: {e}")
+                QMessageBox.warning(self, "Error", 
+                    f"Failed to export rules: {str(e)}")
+    
+    # Replace both import_rules methods with:
+    
+    def import_rules(self):
+        """Import rename rules"""
+        filename, _ = QFileDialog.getOpenFileName(
+            self,
+            "Import Rules",
+            str(Path("rules")),
+            "JSON Files (*.json)"
+        )
+        if filename:
+            try:
+                # Load and validate rules
+                with open(filename, 'r', encoding='utf-8') as f:
+                    rules = json.load(f)
+                
+                # Validate rules format
+                self.rules_manager.validate_rules(rules)
+                
+                # Update rules manager
+                self.rules_manager.rules = rules
+                
+                # Update tag editor if tag categories are present
+                if 'tag_categories' in rules:
+                    TagEditor.CATEGORIES.update(rules['tag_categories'])
+                
+                # Refresh UI
+                self.refresh_suggested_names()
+                
+                QMessageBox.information(self, "Success", 
+                    "Rules imported successfully")
+            except ValueError as ve:
+                logging.error(f"Invalid rules format: {ve}")
+                QMessageBox.warning(self, "Error", 
+                    f"Invalid rules format: {str(ve)}")
+            except Exception as e:
+                logging.error(f"Failed to import rules: {e}")
+                QMessageBox.warning(self, "Error", 
+                    f"Failed to import rules: {str(e)}")
+                
+    def refresh_suggested_names(self):
+            """Refresh all suggested names in the file table"""
+            for row in range(self.file_table.rowCount()):
+                filename = self.file_table.item(row, 0).text()
+                suggested_name = self.generate_new_name(filename)
+                self.file_table.item(row, 1).setText(suggested_name)       

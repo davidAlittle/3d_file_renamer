@@ -4,11 +4,11 @@ import logging
 from pathlib import Path
 import sys
 from PySide6.QtWidgets import QApplication
-from ui.main_window import MainWindow
+from src.ui.main_window import MainWindow
 import sys
 from PySide6.QtWidgets import QApplication
-from ui.main_window import MainWindow
-from utils.logging_config import LogConfig
+from src.ui.main_window import MainWindow
+from src.utils.logging_config import LogConfig
 
 # main.py
 def setup_logging():

@@ -1,0 +1,31 @@
+{
+    "general": {
+        "default_directory": "",
+        "auto_check_duplicates": true,
+        "confirm_renames": true,
+        "save_window_size": true
+    },
+    "files": {
+        "archive_types": [
+            ".zip",
+            ".rar",
+            ".7z"
+        ],
+        "ignore_patterns": [
+            "thumbs.db",
+            ".ds_store"
+        ],
+        "backup_originals": true
+    },
+    "naming": {
+        "auto_capitalize": true,
+        "preserve_version_numbers": true,
+        "add_category_prefix": true,
+        "default_category": "MISC"
+    },
+    "tags": {
+        "auto_suggest_tags": true,
+        "tag_style": "brackets",
+        "tag_separator": " "
+    }
+}
