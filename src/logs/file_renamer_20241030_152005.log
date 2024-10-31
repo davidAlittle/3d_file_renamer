@@ -1,0 +1,8 @@
+2024-10-30 15:20:05,985 - FileRenamer - INFO - Starting File Renamer application
+2024-10-30 15:21:18,978 - root - INFO - Loading 829 files
+2024-10-30 15:22:23,139 - root - ERROR - Error analyzing RAR J:\TG\VOLDEMORT.part2.rar: Need to start from first volume (current: 1)
+2024-10-30 15:24:21,833 - root - ERROR - Error analyzing ZIP J:\TG\golden-snitch20180402-14411-1jy77iu.zip: File is not a zip file
+2024-10-30 15:26:45,382 - root - ERROR - Error analyzing ZIP J:\TG\Star Lord Peter Quill.zip: File is not a zip file
+2024-10-30 15:52:53,947 - root - ERROR - Error analyzing RAR J:\TG\VOLDEMORT.part2.rar: Need to start from first volume (current: 1)
+2024-10-30 15:52:56,731 - root - ERROR - Error analyzing ZIP J:\TG\golden-snitch20180402-14411-1jy77iu.zip: File is not a zip file
+2024-10-30 15:53:00,580 - root - ERROR - Error analyzing ZIP J:\TG\Star Lord Peter Quill.zip: File is not a zip file

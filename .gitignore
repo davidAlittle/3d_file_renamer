@@ -12,6 +12,6 @@ ENV/
 !.vscode/settings.json
 
 # Project specific
-*.db
-logs/
+# *.db
+# logs/
 temp/
