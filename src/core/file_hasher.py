@@ -2,8 +2,6 @@
 from pathlib import Path
 import hashlib
 import logging
-from pathlib import Path
-import hashlib
 from typing import Optional
 
 class FileHasher:

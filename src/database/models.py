@@ -1,4 +1,5 @@
-from datetime import datetime
+# src/database/models.py
+from datetime import datetime, timezone
 from sqlalchemy import (
     Column, Integer, String, DateTime, ForeignKey, Table, Index
 )
@@ -6,6 +7,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
 Base = declarative_base()
+
+def get_utc_now():
+    """Helper function to get current UTC time"""
+    return datetime.now(timezone.utc)
 
 file_tags = Table(
     'file_tags', Base.metadata,
@@ -24,10 +29,13 @@ class File(Base):
     content_hash = Column(String)
     quick_hash = Column(String)
     first_seen = Column(
-        DateTime, default=lambda: datetime.now(datetime.timezone.utc)
+        DateTime(timezone=True), 
+        default=get_utc_now
     )
     last_modified = Column(
-        DateTime, default=lambda: datetime.now(datetime.timezone.utc)
+        DateTime(timezone=True), 
+        default=get_utc_now,
+        onupdate=get_utc_now
     )
     status = Column(String)
     tags = relationship('Tag', secondary=file_tags, back_populates='files')
@@ -59,7 +67,8 @@ class ProcessedArchive(Base):
     file_list = Column(String)
     analysis_data = Column(String)
     processed_date = Column(
-        DateTime, default=lambda: datetime.now(datetime.timezone.utc)
+        DateTime(timezone=True), 
+        default=get_utc_now
     )
 
     __table_args__ = (

@@ -43,6 +43,19 @@ class RulesManager:
             'nsfw_status': self._check_nsfw_status(name)
         }
 
+    def analyze_name(self, name: str) -> Dict[str, Any]:
+        """Analyze a name using the current rules"""
+        return {
+            'categories': self._find_matching_categories(name),
+            'franchises': self._find_matching_franchises(name),
+            'creators': self._find_matching_creators(name),
+            'special_patterns': self._find_special_patterns(name),
+            'tags': self._find_matching_tags(name),
+            'technical': self._extract_technical_specs(name),
+            'version': self._extract_version(name),
+            'nsfw_status': self._check_nsfw_status(name)
+        }
+
     def _find_matching_categories(self, name: str) -> List[Dict[str, Any]]:
         """Find all matching categories for a name"""
         lower_name = name.lower()
@@ -112,6 +125,10 @@ class RulesManager:
             if any(pattern in lower_name for pattern in patterns):
                 tags.add(tag)
         
+        # "nsfw" contains "sfw", so never suggest conflicting status tags together
+        if "NSFW" in tags:
+            tags.discard("SFW")
+        
         return list(tags)
 
     def _extract_technical_specs(self, name: str) -> List[str]:
@@ -144,8 +161,9 @@ class RulesManager:
             "has_both_versions": has_both
         }
 
-    def validate_rules(self) -> bool:
-        """Validate the structure and content of rules"""
+    def validate_rules(self, rules: Dict[str, Any] = None) -> bool:
+        """Validate the structure and content of the given or current rules"""
+        rules = rules if rules is not None else self.rules
         required_sections = [
             "categories", "franchises", "creators", "special_patterns",
             "tag_rules", "naming_patterns"
@@ -154,11 +172,11 @@ class RulesManager:
         try:
             # Check for required sections
             for section in required_sections:
-                if section not in self.rules:
+                if section not in rules:
                     raise ValueError(f"Missing required section: {section}")
                 
             # Validate category structure
-            for category, data in self.rules["categories"].items():
+            for category, data in rules["categories"].items():
                 if not isinstance(data.get("patterns"), list):
                     raise ValueError(f"Invalid patterns for category: {category}")
                 if not isinstance(data.get("priority"), int):
@@ -170,3 +188,7 @@ class RulesManager:
             
         except Exception as e:
             raise ValueError(f"Rules validation failed: {str(e)}")
+    
+    def get_default_category(self) -> str:
+        """Return the default category"""
+        return self.rules.get("default_category", "MISC")

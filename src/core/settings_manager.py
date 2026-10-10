@@ -1,8 +1,20 @@
 # src/core/settings_manager.py
+import copy
 import json
 from pathlib import Path
 from typing import Any, Dict
 import logging
+
+INVALID_FILENAME_CHARS = '<>:"/\\|?*'
+
+
+def sanitize_tag_separator(separator: str) -> str:
+    """Remove characters that are not allowed in Windows filenames"""
+    return "".join(
+        char for char in separator
+        if char not in INVALID_FILENAME_CHARS and ord(char) >= 32
+    )
+
 
 class Settings:
     DEFAULT_SETTINGS = {
@@ -30,16 +42,16 @@ class Settings:
         }
     }
 
-    def __init__(self):
-        # Get path to project root (two levels up from this file)
-        project_root = Path(__file__).parent.parent.parent
+    def __init__(self, settings_file: Path = None):
+        # Settings and the database live together in the data directory
+        self.settings_file = Path(settings_file) if settings_file else (
+            Path(__file__).parent.parent / "data" / "settings.json"
+        )
         
         # Create data directory if it doesn't exist
-        self.data_dir = project_root / "data"
+        self.data_dir = self.settings_file.parent
         self.data_dir.mkdir(exist_ok=True)
         
-        # Settings file path
-        self.settings_file = Path(__file__).parent.parent / "data" / "settings.json"
         self.settings = self.load_settings()
 
     def load_settings(self) -> Dict:
@@ -48,18 +60,34 @@ class Settings:
                 with open(self.settings_file, 'r') as f:
                     saved_settings = json.load(f)
                 # Merge with defaults to ensure all keys exist
-                return self._merge_settings(self.DEFAULT_SETTINGS, saved_settings)
+                merged = self._merge_settings(self.DEFAULT_SETTINGS, saved_settings)
+                self._sanitize_settings(merged)
+                return merged
             except Exception as e:
                 logging.error(f"Error loading settings: {e}")
-                return self.DEFAULT_SETTINGS.copy()
+                return copy.deepcopy(self.DEFAULT_SETTINGS)
         else:
             # If settings file doesn't exist, create it with defaults
             self.save_settings(self.DEFAULT_SETTINGS)
-            return self.DEFAULT_SETTINGS.copy()
+            return copy.deepcopy(self.DEFAULT_SETTINGS)
+
+    def _sanitize_settings(self, settings: Dict):
+        """Normalize settings values so they stay valid in Windows filenames"""
+        tags = dict(settings.get("tags", {}))
+        separator = tags.get("tag_separator")
+        if separator is not None:
+            cleaned = sanitize_tag_separator(str(separator))
+            if cleaned != separator:
+                logging.warning(
+                    f"Adjusted tag separator {separator!r} to {cleaned!r}: "
+                    "characters not allowed in Windows filenames were removed"
+                )
+            tags["tag_separator"] = cleaned
+            settings["tags"] = tags
 
     def _merge_settings(self, default: Dict, saved: Dict) -> Dict:
         """Recursively merge saved settings with defaults"""
-        merged = default.copy()
+        merged = copy.deepcopy(default)
         for key, value in saved.items():
             if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):
                 merged[key] = self._merge_settings(merged[key], value)

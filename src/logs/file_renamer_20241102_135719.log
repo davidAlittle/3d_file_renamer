@@ -1,0 +1,15 @@
+2024-11-02 13:57:19,739 - FileRenamer - INFO - Starting File Renamer application
+2024-11-02 13:57:20,044 - FileRenamer - ERROR - Application error: 'Index' object has no attribute 'exists'
+Traceback (most recent call last):
+  File "C:\Users\David Little\3d_file_renamer\src\main.py", line 34, in main
+    window = MainWindow()
+             ^^^^^^^^^^^^
+  File "C:\Users\David Little\3d_file_renamer\src\ui\main_window.py", line 41, in __init__
+    self.db = DatabaseManager()
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\David Little\3d_file_renamer\src\database\database.py", line 38, in __init__
+    self.ensure_indexes()
+  File "C:\Users\David Little\3d_file_renamer\src\database\database.py", line 128, in ensure_indexes
+    if not index.exists(connection):
+           ^^^^^^^^^^^^
+AttributeError: 'Index' object has no attribute 'exists'

@@ -1,4 +1,5 @@
 {
+    "default_category": "MISC",
     "categories": {
         "ANIME": {
             "patterns": ["anime", "manga", "waifu", "dragon ball", "bleach", "naruto", "one piece", "my hero academia", "fullmetal alchemist", "goblin slayer"],
